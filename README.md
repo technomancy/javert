@@ -1,13 +1,13 @@
 # javert
 
-> Tell me quickly what's the story
-> Who saw what and why and where
-> Let him give a full description
-> Let him answer to Javert!
-> In this nest of whores and vipers
-> Let one speak who saw it all
-> Who laid hands on this good man here?
-> What's the substance of this brawl?
+> Tell me quickly what's the story  
+> Who saw what and why and where  
+> Let him give a full description  
+> Let him answer to Javert!  
+> In this nest of whores and vipers  
+> Let one speak who saw it all  
+> Who laid hands on this good man here?  
+> What's the substance of this brawl?  
 
 - Inspector Javert, _Les Miserables_
 
