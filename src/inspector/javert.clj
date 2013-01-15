@@ -164,5 +164,5 @@
   (print x))
 
 (defn inspect-print [x]
-  (doseq [x (inspect java.net.URI)]
-    (inspect-print-component x)))
+  (doseq [component (inspect x)]
+    (inspect-print-component component)))
