@@ -20,7 +20,7 @@
   [handler]
   (fn [{:keys [op ns sym transport] :as msg}]
     (if (= op "inspect")
-      (let [value (with-out-string (javert/inspect-print (lookup (symbol ns) (symbol sym))))]
+      (let [value (with-out-str (javert/inspect-print (lookup (symbol ns) (symbol sym))))]
         (transport/send transport (response-for msg :value value :status :done)))
       (handler msg))))
 
