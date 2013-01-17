@@ -8,14 +8,15 @@
 (defn lookup-inspect
   [ns sym]
   (with-out-str
-    (if-let [namespace (find-ns sym)]
-      (javert/inspect-print namespace)
-      (if-let [var (ns-resolve ns sym)]
-        (if (or (instance? Class var) (:macro (meta var)) (fn? @var))
-          (javert/inspect-print var)
-          (javert/inspect-print @var))
-        (throw (ex-info (format "Could not resolve %s in namespace: %s" sym ns)
-                        {:namespace ns :symbol sym}))))))
+    (let [value (or (find-ns sym) (ns-resolve ns sym))]
+      (if (or (instance? Class value) (instance? clojure.lang.Namespace value)
+              ;; I'm not sure if I should be hard-coding the decision
+              ;; to inspect the var in the two cases below, but the
+              ;; vars have more valuable info than the values do in my
+              ;; opinion.
+              (:macro (meta value)) (fn? @value))
+        (javert/inspect-print value)
+        (javert/inspect-print @value)))))
 
 (defn wrap-inspect
   [handler]
