@@ -6,7 +6,7 @@
     (let ((inhibit-read-only t))
       (insert str))))
 
-(defun debug (output)
+(defun nrepl-inspect-debug (output)
   (with-current-buffer (get-buffer-create "nrepl-inspect-debug")
     (if (= (point) (point-max))
         (insert output))
