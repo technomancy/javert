@@ -5,26 +5,23 @@
             [clojure.tools.nrepl.middleware :refer [set-descriptor!]]
             [clojure.tools.nrepl.misc :refer [response-for]]))
 
-(defn lookup-inspect
+;; I'm not sure if I should be hard-coding the decision to inspect the
+;; var for macros and functions. Yet, in my opinion, the vars have
+;; more valuable info than the values do in those cases.
+(defn lookup
   [ns sym]
-  (with-out-str
-    (let [value (or (find-ns sym) (ns-resolve ns sym))]
-      (if (or (instance? Class value) (instance? clojure.lang.Namespace value)
-              ;; I'm not sure if I should be hard-coding the decision
-              ;; to inspect the var in the two cases below, but the
-              ;; vars have more valuable info than the values do in my
-              ;; opinion.
-              (:macro (meta value)) (fn? @value))
-        (javert/inspect-print value)
-        (javert/inspect-print @value)))))
+  (let [var (or (find-ns sym) (ns-resolve ns sym))]
+    (if (or (instance? Class var) (instance? clojure.lang.Namespace var)
+            (:macro (meta var)) (fn? @var))
+      var
+      @var)))
 
 (defn wrap-inspect
   [handler]
   (fn [{:keys [op ns sym transport] :as msg}]
     (if (= op "inspect")
-      (->> {:value (lookup-inspect (symbol ns) (symbol sym)) :status :done}
-           (response-for msg)
-           (transport/send transport))
+      (let [value (with-out-string (javert/inspect-print (lookup (symbol ns) (symbol sym))))]
+        (transport/send transport (response-for msg :value value :status :done)))
       (handler msg))))
 
 (set-descriptor! #'wrap-inspect
