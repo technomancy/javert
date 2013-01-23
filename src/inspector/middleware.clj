@@ -27,5 +27,5 @@
 (set-descriptor! #'wrap-inspect
   {:requires #{#'session}
    :handles {"inspect" {:doc "Print the results of inspector.javert/inspect-print to stdout."
-                        :requires {"symbol" "Inspect the value bound to this symbol."
+                        :requires {"sym" "Inspect the value bound to this symbol."
                                    "ns" "Resolve the symbol in this namespace."}}}})
