@@ -1,4 +1,4 @@
-(defproject javert "0.1.0"
+(defproject javert "0.2.0-SNAPSHOT"
   :description "The inspector."
   :url "https://github.com/technomancy/javert"
   :license {:name "Eclipse Public License"
